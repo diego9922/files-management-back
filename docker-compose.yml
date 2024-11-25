@@ -1,0 +1,32 @@
+services:
+  nest-mongo:
+    container_name: nest-mongo
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DB_PASSWORD}
+    env_file:
+      - .env
+    ports:
+      - ${MONGO_DB_PORT}:27017
+    expose:
+      - ${MONGO_DB_PORT}
+  nest-api:
+    container_name: "nest-api"
+    ports:
+      - ${PORT}:8080
+    volumes:
+      - ./gcloud-key-file.json:${GCLOUD_JSON_KEY_FILE}
+      - ./:/home/node
+    build:
+      context: ./
+      dockerfile: Dockerfile 
+    tty: true
+    command: "npm run start:dev"
+    env_file:
+      - .env
+    depends_on:
+      - "nest-mongo"
+    links:
+      - "nest-mongo:mongo"

@@ -1,5 +1,5 @@
 import { Field, ObjectType, registerEnumType, InputType, InterfaceType, ID } from '@nestjs/graphql';
-import { FileStatusEnum } from 'src/file/db/schemas/file.schema';
+import { FileStatusEnum } from '../../db/schemas/file.schema';
 import { FileUpload, GraphQLUpload } from 'graphql-upload-ts';
 
 registerEnumType(FileStatusEnum, {

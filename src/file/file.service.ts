@@ -24,6 +24,19 @@ export class FileService {
         return newFile.save();
     }
 
+    async update(id:string, file:FileInput): Promise<File>
+    {
+        const currentFile = await this.findById(id);
+        const upload = await this.storageService.upload(file.file);
+        const fileSchema:File = {
+            ...upload,
+            description: file.description
+        };
+        const updated = await this.fileModel.findByIdAndUpdate(id, fileSchema, { new: true }); 
+        this.storageService.delete(currentFile.name);
+        return updated;
+    }
+
     findAll(): Promise<File[]>
     {
         return this.fileModel.find(); 

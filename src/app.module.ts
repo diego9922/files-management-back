@@ -6,6 +6,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { FolderModule } from './folder/folder.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { AppService } from './app.service';
         authSource: "admin"
       }
     ),
-    FileModule
+    FileModule,
+    FolderModule
   ],
   controllers: [AppController],
   providers: [AppService],//services used by controllers for managament data

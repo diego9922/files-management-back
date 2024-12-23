@@ -17,14 +17,26 @@ enum FileStatusEnum {
   DELETED
 }
 
+type Folder {
+  _id: ID!
+  name: String!
+  description: String!
+  parentFolder: String
+}
+
 type Query {
   hello: String!
   fileGetAll: [File!]!
   fileGetById(id: String!): File!
+  helloFolder: String!
+  folderGetAll: [Folder!]!
+  folderGetById(id: String!): Folder!
 }
 
 type Mutation {
   fileRegister(file_data: FileInput!): File!
+  fileUpdate(id: String!, file_data: FileInput!): File!
+  folderRegister(name: String!, description: String, parentFolder: String): Folder!
 }
 
 input FileInput {

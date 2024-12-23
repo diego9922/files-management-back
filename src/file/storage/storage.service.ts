@@ -34,5 +34,11 @@ export class StorageService {
         const bucketFile = this.bucket.file(fileStorage.name);
         const uploadFile = await fileData.createReadStream().pipe(bucketFile.createWriteStream(), { end: true });//@todo, do events onerror and onfinished as https://github.com/googleapis/nodejs-storage/blob/main/samples/streamFileUpload.js
         return fileStorage;
-    }   
+    }
+
+    async delete(fileName:string): Promise<void>
+    {
+        console.log(`Delete file from storage: ${fileName}`);
+        await this.bucket.file(fileName).delete({ ifGenerationNotMatch: 0 });
+    }
 }

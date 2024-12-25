@@ -10,7 +10,7 @@ import { StorageService } from './storage/storage.service';
         MongooseModule.forFeature([
             {
                 name: File.name, //name of de class, in this case is "File"
-                schema: FileSchema
+                schema: FileSchema,
             }
         ]),
     ],

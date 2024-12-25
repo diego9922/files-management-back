@@ -1,5 +1,4 @@
 import { Field, ObjectType, ID, ArgsType } from '@nestjs/graphql';
-import { FileUpload, GraphQLUpload } from 'graphql-upload-ts';
 
 @ObjectType()
 export class Folder {

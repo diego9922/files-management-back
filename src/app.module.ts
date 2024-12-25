@@ -7,6 +7,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { FolderModule } from './folder/folder.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { FolderModule } from './folder/folder.module';
       }
     ),
     FileModule,
-    FolderModule
+    FolderModule,
+    UserModule
   ],
   controllers: [AppController],
   providers: [AppService],//services used by controllers for managament data

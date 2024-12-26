@@ -53,6 +53,7 @@ type Mutation {
   fileUpdate(id: String!, file_data: FileInput!): File!
   folderRegister(name: String!, description: String, parentFolder: String): Folder!
   userRegister(email: String!, password: String!): User!
+  login(email: String!, password: String!): String!
 }
 
 input FileInput {

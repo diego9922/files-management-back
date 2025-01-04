@@ -5,7 +5,7 @@ export enum FileStatusEnum{
     DELETED="DELETED",
 }
 
-@Schema()
+@Schema({ timestamps: true })
 export class File {
     @Prop({ required: true})
     originalName: string;

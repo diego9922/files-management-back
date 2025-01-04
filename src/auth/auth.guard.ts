@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { GqlExecutionContext } from "@nestjs/graphql";
 import { ExecutionContextHost } from '@nestjs/core/helpers/execution-context-host';
 import { AuthGuard } from '@nestjs/passport';
@@ -15,16 +15,17 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 	canActivate(context: ExecutionContext) {
         const ctx = GqlExecutionContext.create(context);
         const { req } = ctx.getContext();
-
         return super.canActivate(
-            new ExecutionContextHost([req]),
+            new ExecutionContextHost([req])
         );
     }
 
-    // handleRequest(err: any, user: any) {
+    // handleRequest(err: any, user: any, info:any, context: ExecutionContext, status?: any) {
+    //     console.log(context.req);
 	// 	console.log("handleRequest", user);
     //     if (err || !user) {
-    //         throw err || new Error('GqlAuthGuard');
+    //         throw new UnauthorizedException('Invalid Token - asdf');
+    //         // throw err || info;
     //     }
     //     return user;
     // }

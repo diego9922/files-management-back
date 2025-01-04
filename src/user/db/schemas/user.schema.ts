@@ -18,7 +18,7 @@ export class UserFound extends User {
 
 export const UserSchema = SchemaFactory.createForClass(User)
     .index({ email: 1 }, { unique: true })
-    .pre("save", function(next){
+    .pre("save", function(next){ //@todo add update and do the process in other place
         const saltRounds = 10;
         genSalt(saltRounds).then((salt) => {
             hash(this.password, salt).then((hash) => {

@@ -23,4 +23,4 @@ export class FoundFolder {
     __v: number;
 }
 
-export const FolderSchema = SchemaFactory.createForClass(Folder);//@todo, use middelware for incremente __v
+export const FolderSchema = SchemaFactory.createForClass(Folder).index({ name: 1, parentFolder: 1 }, { unique: true });//@todo, use middelware for incremente __v

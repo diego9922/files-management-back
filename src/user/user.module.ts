@@ -3,6 +3,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema, User as UserDB } from './db/schemas/user.schema';
 import { UserResolver } from './user.resolver';
 import { UserService } from './user.service';
+import { FolderService } from 'src/folder/folder.service';
+import { FolderModule } from 'src/folder/folder.module';
 
 @Module({
     imports: [
@@ -11,7 +13,8 @@ import { UserService } from './user.service';
                 name: UserDB.name,
                 schema: UserSchema
             }
-        ])
+        ]),
+        FolderModule
     ],
     providers: [UserResolver, UserDB, UserService],
     exports: [UserService]

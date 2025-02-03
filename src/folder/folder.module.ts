@@ -14,6 +14,7 @@ import { FolderResolver } from './folder.resolver';
         ]),
     ],
     providers: [FolderService, FolderResolver],
-    controllers: []
+    controllers: [],
+    exports: [ FolderService ]
 })
 export class FolderModule {}

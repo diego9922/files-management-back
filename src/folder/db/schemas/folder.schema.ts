@@ -1,6 +1,6 @@
 import { Schema, Prop, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
-import { User } from "src/user/db/schemas/user.schema";
+import { UserChangesFields } from "src/common/db/schemas/fields";
 
 @Schema({ timestamps: true })
 export class Folder {
@@ -14,14 +14,8 @@ export class Folder {
     @Prop()
     description?: string;
 
-    @Prop({ required: true, ref: User.name })
-    owner: mongoose.Schema.Types.ObjectId;
-
-    @Prop({ required: true, ref: User.name })
-    createdBy: mongoose.Schema.Types.ObjectId;
-
-    @Prop({ required: true, ref: User.name })
-    updatedBy: mongoose.Schema.Types.ObjectId;
+    @Prop({ required: true, ref: "userChanges" })
+    userChanges: UserChangesFields;
 }
 
 export class FoundFolder {

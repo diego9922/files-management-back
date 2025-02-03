@@ -9,6 +9,7 @@ import { AppService } from './app.service';
 import { FolderModule } from './folder/folder.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { AuthModule } from './auth/auth.module';
     FileModule,
     FolderModule,
     UserModule,
-    AuthModule
+    AuthModule,
+    CommonModule
   ],
   controllers: [AppController],
   providers: [AppService],//services used by controllers for managament data

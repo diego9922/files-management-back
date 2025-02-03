@@ -14,10 +14,12 @@ export class FolderService {
     async create(user:UserFound, folder:FolderArgs): Promise<FolderDB>
     {
         const newFolder = new this.folderModel({
-            ...folder,
-            owner: user._id,
-            createdBy: user._id,
-            updatedBy: user._id
+            ...folder, 
+            userChanges: {
+                owner: user._id,
+                createdBy: user._id,
+                updatedBy: user._id
+            }
         });
         return newFolder.save();
     }
@@ -26,7 +28,11 @@ export class FolderService {
     {
         const updated = this.folderModel.findByIdAndUpdate(
             id, 
-            { ...folder, updatedBy: user._id, $inc: {__v: 1} },
+            {
+                ...folder,
+                "userChanges.updatedBy": user._id,
+                $inc: {__v: 1}
+            },
             { new: true }
         );
         return updated;

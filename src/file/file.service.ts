@@ -4,6 +4,8 @@ import { Model } from 'mongoose';
 import { File } from './db/schemas/file.schema';
 import { FileInput } from './graphql/models/file.model';
 import { StorageService } from './storage/storage.service';
+import { UserFound } from 'src/user/db/schemas/user.schema';
+import { ObjectId } from 'mongoose';
 
 @Injectable()
 export class FileService {
@@ -12,27 +14,35 @@ export class FileService {
         private storageService:StorageService
     ){}
 
-    async create(file:FileInput): Promise<File>
+    async create(user:UserFound, file:FileInput): Promise<File>
     {
         const upload = await this.storageService.upload(file.file);
-        const fileSchema:File = {
-            ...upload,
-            description: file.description
-        };
 
-        const newFile = new this.fileModel(fileSchema);
+        const newFile = new this.fileModel({
+            ...upload,
+            description: file.description,
+            userChanges: {
+                owner: user._id,
+                createdBy: user._id,
+                updatedBy: user._id,
+            }
+        });
         return newFile.save();
     }
 
-    async update(id:string, file:FileInput): Promise<File>
+    async update(user:UserFound, id:string, file:FileInput): Promise<File>
     {
         const currentFile = await this.findById(id);
         const upload = await this.storageService.upload(file.file);
-        const fileSchema:File = {
-            ...upload,
-            description: file.description
-        };
-        const updated = await this.fileModel.findByIdAndUpdate(id, fileSchema, { new: true }); 
+        const updated = await this.fileModel.findByIdAndUpdate(
+            id,
+            {
+                ...upload,
+                description: file.description,
+                "userChanges.updatedBy": user._id,
+            },
+            { new: true }
+        ); 
         this.storageService.delete(currentFile.name);
         return updated;
     }
